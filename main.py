@@ -6,6 +6,7 @@ import parsing_page as pp
 
 """ Main function who will run all the function our programms will need"""
 def main():
+    print("We are getting all the catégorie")
     category = get_info_category()
     all_data = {
         "product_page_url" : [],
@@ -53,6 +54,17 @@ def main():
             o = o+1
         i = i+1
     
+    ## dowload all img
+    a = 0
+    for img_url in all_data["image_url"]:
+        name_tmp = "img/" + str(a) + '.jpg'
+        f = open(name_tmp, 'wb')
+        response = requests.get(img_url)
+        f.write(response.content)
+        f.close()
+        print("Image n°" + str(a) + " récupérée.")
+        a += 1
+
     # # export to pandas at excel format
     dataframe = pd.DataFrame(all_data)
     dataframe.to_excel('all_data.xlsx')
